@@ -28,7 +28,21 @@ class Process(object):
         self.pid = pid
 
         items = fileops.read('/proc/%d/stat' % pid).split(' ')
-        self.name = items[1].lstrip('(').rstrip(')')
+# HotFix - Obrabotka na procesi, koito sudurjat interval ili drugi simvoli v imeto si
+        self.name = items[1]
+        if items[1].find(')') < 0 and items[1].find('spamd'):
+           self.name = (items[1] + items[2]).lstrip('(').rstrip(')')
+           del items[2]
+        if items[1].find(')') < 0 and items[1].find('cpsrvd'):
+           self.name = (items[1] + items[2] + items[3] + items[4]).lstrip('(').rstrip(')')
+           del items[2]
+           del items[3]
+           del items[4]
+        if items[1].find(')') < 0 and (items[1].find('queueprocd') or items[1].find('cPhulkd') or items[1].find('cpdavd') or items[1].find('cpanellogd')):
+           self.name = (items[1] + items[2] + items[3]).lstrip('(').rstrip(')')
+           del items[2]
+           del items[3]
+# Kraj
         self.state = items[2]
         self.ppid = int(items[3])
         self.pgid = int(items[4])

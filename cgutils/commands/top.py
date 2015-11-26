@@ -30,7 +30,7 @@ from cgutils import host
 from cgutils import formatter
 
 
-if sys.version_info.major == 3:
+if sys.version_info[0] == 3:
     long = int
 
 class CGTopStats:

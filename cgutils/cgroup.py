@@ -27,7 +27,7 @@ from cgutils import process
 from . import fileops
 
 
-if sys.version_info.major == 3:
+if sys.version_info[0] == 3:
     long = int
 
 

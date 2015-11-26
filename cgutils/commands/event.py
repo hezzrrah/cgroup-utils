@@ -31,7 +31,7 @@ from cgutils import fileops
 from cgutils import formatter
 
 
-if sys.version_info.major == 3:
+if sys.version_info[0] == 3:
     long = int
 
 class Command(command.Command):
